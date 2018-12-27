@@ -6,7 +6,7 @@
 #    By: sgendry <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/24 18:09:46 by sgendry           #+#    #+#              #
-#    Updated: 2018/12/04 21:27:16 by sgendry          ###   ########.fr        #
+#    Updated: 2018/12/25 20:43:21 by sgendry          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,8 +91,11 @@ $(NAME): $(OBJECTS)
 	ar rc $(NAME) $(OBJECTS)
 	ranlib $(NAME)
 
-$(OBJECTS): $(FILES)
-	$(CC) $(CFLAGS) $(FILES) -I libft.h
+%.o: %.c
+	$(CC) $(CFLAGS) -I ./includes -c $<
+
+#$(OBJECTS): $(FILES)
+#	$(CC) $(CFLAGS) $(FILES) -I libft.h
 
 clean:
 	rm -rf $(OBJECTS)

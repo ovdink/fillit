@@ -3,27 +3,37 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lschambe <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: sgendry <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/12/19 15:13:27 by lschambe          #+#    #+#              #
-#    Updated: 2018/12/23 19:11:56 by sgendry          ###   ########.fr        #
+#    Created: 2018/12/20 18:09:46 by sgendry           #+#    #+#              #
+#    Updated: 2018/12/27 15:19:09 by sgendry          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
+
 FLAG = -Wall -Werror -Wextra
-FILES = fillit.c \
-		valid.c \
-		libft/ft_strlen.c
 
-$(NAME) :
-	gcc $(FLAG) -o $(NAME) $(FILES)
+OBJ = $(patsubst %.c,%.o,$(wildcard *.c))
 
-all : $(NAME)
+LIB_OBJ = $(patsubst %.c,%.o,$(wildcard libft/*.c))
 
-clean :
+all: $(NAME)
 
-fclean : clean
-	rm -rf $(NAME)
+$(NAME): $(OBJ) $(LIB_OBJ)
+	gcc $(FLAG) $^ -o $@
+
+%.o: %.c
+	gcc $(FLAG) -c $^ -o $@ -Ilibft
+
+clean:
+	rm -f *.o
+	rm -f libft/*.o
+
+fclean: clean
+	rm -f $(NAME)
+	rm -f libft/*.o
 
 re : fclean all
+
+.PHONY: all clean fclean re
